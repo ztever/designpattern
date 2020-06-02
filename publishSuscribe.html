@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>publish subscribe</title>
+  </head>
+
+  <body></body>
+  <script>
+    class SubscribePublish {
+      constructor() {
+        this.callback = {};
+      }
+      addSubscribe(topic, fn) {
+        this.callback[topic] = fn;
+      }
+      publish(topic, args) {
+        if (this.callback[topic]) {
+          this.callback[topic](args);
+        } else {
+          console.log("you dont had subscribe " + topic);
+        }
+      }
+      removeSubscribe(topic) {
+        this.callback[topic] = null;
+      }
+    }
+    const subscribePublish = new SubscribePublish();
+    subscribePublish.addSubscribe("wuhan", (message) => {
+      console.log(`wuhan is ${message}`);
+    });
+    subscribePublish.addSubscribe("hubei", (name) => {
+      console.log("name is ", name);
+    });
+    subscribePublish.publish("wuhan", "very big");
+    subscribePublish.publish("hubei", "hubei");
+    subscribePublish.removeSubscribe("wuhan");
+    subscribePublish.publish("wuhan", "in Hubei province");
+  </script>
+</html>

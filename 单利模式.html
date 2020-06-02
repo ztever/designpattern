@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>单利模式</title>
+    <style>
+      .model {
+        width: 100px;
+        height: 100px;
+        color: red;
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div onclick="clickShowModel()">click show model</div>
+    <div onclick="clickHideModel()">click hide model</div>
+  </body>
+  <script>
+    class SingleLayer {
+      constructor() {
+        this.instance = null;
+        this.init();
+      }
+      init() {
+        this.instance = this.createModel();
+      }
+
+      // createSingleLayer(fn) {
+      //   let instance;
+      //   return function () {
+      //     return instance || (instance = fn());
+      //   };
+      // }
+
+      createModel() {
+        const div = document.createElement("div");
+        div.className = "model";
+        div.style.display = "none";
+        document.body.appendChild(div);
+        return div;
+      }
+      showModel(val) {
+        this.instance.innerHTML = val;
+        this.instance.style.display = "block";
+      }
+      hideModel() {
+        this.instance.style.display = "none";
+      }
+    }
+
+    const singleLayerIntance = new SingleLayer();
+
+    function clickShowModel() {
+      singleLayerIntance.showModel("hello world!");
+    }
+
+    function clickHideModel() {
+      singleLayerIntance.hideModel();
+    }
+  </script>
+</html>

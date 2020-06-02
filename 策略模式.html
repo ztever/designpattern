@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>策略模式</title>
+  </head>
+  <body>
+    <form class="formEle">
+      <input name="username" placeholder="please input username" type="text" />
+      <input name="password" placeholder="please input passord " type="text" />
+      <input
+        name="telephone"
+        placeholder="please input telephone"
+        type="text"
+      />
+      <button>提交</button>
+    </form>
+  </body>
+  <script>
+    //  计算薪水
+    class CalcSalary {
+      static strategies = {
+        A: (val) => {
+          return val * 3;
+        },
+        B: (val) => {
+          return val * 2;
+        },
+        C: (val) => val
+      };
+      constructor() {
+        // this.strategies = {
+        //   A: (val) => {
+        //     return val * 3;
+        //   },
+        //   B: (val) => {
+        //     return val * 2;
+        //   },
+        //   C: (val) => val
+        // };
+      }
+      static getSalary(level, num) {
+        return this.strategies[level](num);
+      }
+      //  getSalary(level, num) {
+      //   return this.strategies[level](num);
+      // }
+    }
+
+    console.log("绩效A的薪资", CalcSalary.getSalary("A", 1000));
+    // console.log("绩效A的薪资", new CalcSalary().getSalary("A", 1000));
+
+    /**
+     *  表单校验
+     */
+
+    class FormValidator {
+      constructor() {
+        this.cach = [];
+        this.strategies = {
+          isNoEmpty: (val, errorMsg) => val === "" && errorMsg,
+          isMinLength: (val, len, errorMsg) => val.length < len && errorMsg,
+          isMobile: (val, errorMsg) => {
+            if (!/^1[3|4|5|6|7|8|9][0-9]{9}$/.test(val)) {
+              return errorMsg;
+            }
+          }
+        };
+      }
+      //添加检验规则
+      add(dom, rule, errMsg) {
+        // strategry 与argument分开
+        const ruleList = rule.split(":");
+        this.cach.push(() => {
+          const strategry = ruleList.shift();
+          ruleList.unshift(dom.value);
+          ruleList.push(errMsg);
+          return this.strategies[strategry].apply(this, ruleList);
+        });
+      }
+      // 校验规则
+      start() {
+        for (let i = 0, validatorFunc; (validatorFunc = this.cach[i++]); ) {
+          const msg = validatorFunc();
+          if (msg) {
+            return msg;
+          }
+        }
+      }
+    }
+
+    const formEle = document.querySelector(".formEle");
+    formEle.onsubmit = (e) => {
+      // 阻止页面刷新
+      e.preventDefault();
+      const validator = new FormValidator();
+      validator.add(formEle.username, "isNoEmpty", `username can't be empty`);
+      validator.add(
+        formEle.password,
+        "isMinLength:6",
+        `password length is at least 6 digits`
+      );
+      validator.add(
+        formEle.telephone,
+        "isMobile",
+        `telephone number is not corecct`
+      );
+      const errorMsg = validator.start();
+      if (errorMsg) {
+        alert(errorMsg);
+      }
+    };
+  </script>
+</html>
