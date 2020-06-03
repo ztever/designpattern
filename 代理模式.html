@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>代理模式</title>
+  </head>
+  <body>
+    <div>
+      thorttle: <input type="text" oninput="inputtext(event)" name="" id=""
+    /></div>
+    <div>debounce: <input type="text" oninput="debounceText(event)" /></div>
+  </body>
+  <script>
+    // 节流是每隔一段时间执行一次
+    class FetchData {
+      constructor() {
+        this.timer = null;
+        this.sendData = "";
+      }
+      fetchs(val) {
+        console.log("send data to server", val);
+      }
+      throttle(value) {
+        this.sendData = value;
+        if (this.timer) {
+          return;
+        }
+        this.timer = setTimeout(() => {
+          this.fetchs(this.sendData);
+          this.timer = null;
+        }, 500);
+      }
+    }
+    const throttleFun = new FetchData();
+    function inputtext(e) {
+      throttleFun.throttle(e.target.value);
+    }
+    // 防抖，在固定时间里，如果函数触发了，就取消当前函数，再等一定时间执行
+    class FetchDataDebounce {
+      constructor() {
+        this.timer = null;
+        this.sendData = "";
+      }
+      fetchs(val) {
+        console.log("debounce send data to server", val);
+      }
+      debounceData(value) {
+        this.sendData = value;
+        if (this.timer) {
+          clearTimeout(this.timer);
+        }
+        this.timer = setTimeout(() => {
+          this.fetchs(this.sendData);
+        }, 500);
+      }
+    }
+    const debouncFetch = new FetchDataDebounce();
+    function debounceText(e) {
+      debouncFetch.debounceData(e.target.value);
+    }
+  </script>
+</html>

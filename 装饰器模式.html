@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>装饰器模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 装饰器模式：在不修改类原来接口的情况下，动态的为对象添加功能
+
+    // 优点：扩展对象更灵活，可组合
+
+    // 缺点：增加复杂性
+    //原始的飞机类
+    var Plane = function () {};
+
+    Plane.prototype.fire = function (val) {
+      console.log("发射" + val);
+    };
+
+    //装饰类
+    var MissileDecorator = function (plane) {
+      this.plane = plane;
+    };
+
+    MissileDecorator.prototype.fire = function (val) {
+      this.plane.fire(val);
+    };
+
+    var plane = new Plane();
+    // plane.fire("普通子弹");
+    missPlane = new MissileDecorator(plane);
+    missPlane.fire("导弹");
+  </script>
+</html>
