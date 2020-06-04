@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>享元模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 共享内存 可以用于性能优化
+    // 多个方法，可以共享另一个
+
+    function modelPhoto(sex) {
+      this.sex = sex;
+    }
+    modelPhoto.prototype.takePhtoto = function () {
+      console.log("this.sex " + this.sex + " wear " + this.cloth);
+    };
+
+    const male = new modelPhoto("male");
+    const female = new modelPhoto("female");
+    // 共享了male，节约了内存
+    let i = 0;
+    while (i < 50) {
+      male.cloth = "malecloth" + i;
+      male.takePhtoto();
+      i++;
+    }
+
+    // 以及各种的框架，都是new toast
+    // 然后有success error等方法，都是修改同一个toast的内容，icon之类的，而不是每次都new 一个toast
+
+    // export default {
+    //   install(vue){
+    //     const dialog = new vue({
+    //       data(){
+    //         message:'',
+    //         icon:''
+    //       }
+    //     })
+
+    //     vue.prototype.$_message = {
+    //       sucess(){
+    //         dialog.icon = xxx
+    //         dialog.message = '111'
+    //         document.body.append(dialog)
+    //       }
+    //       error(){
+    //         dialog.icon = xxxsss
+    //         dialog.message = '111sss'
+    //         document.body.append(dialog)
+    //       }
+    //     }
+    //   }
+    // }
+  </script>
+</html>

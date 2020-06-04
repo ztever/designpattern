@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>工厂模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 工厂模式是指提供一个创建对象的接口而不保留具体的创建逻辑，可以根据输入类型创建对象。让子类自行决定实例化哪一种工厂类，实际的创建对象过程在子类中进行
+
+    // 页面上显示多个toast
+    let Factory = function (type) {
+      if (this instanceof Factory) {
+        return new this[type]();
+      } else {
+        return new Factory(type);
+      }
+    };
+    Factory.prototype = {
+      admin: function () {
+        console.log("this is admin");
+      },
+      user: function () {
+        console.log("this is common user");
+      }
+    };
+    const admin = Factory("admin");
+    const user = Factory("user");
+  </script>
+</html>

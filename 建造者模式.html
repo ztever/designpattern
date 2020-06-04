@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>建造者模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 与工厂模式比，参与了更多的创建过程，更复杂
+
+    class Name {
+      constructor(name) {
+        this.name = name;
+      }
+      sayName() {
+        console.log("name is ", this.name);
+      }
+    }
+    class Work {
+      constructor(work) {
+        this.work = work;
+      }
+      doWork() {
+        console.log("开始做", this.work);
+      }
+    }
+    class Person {
+      constructor(name, work) {
+        this.name = name;
+        this.work = work;
+      }
+      buildPerson() {
+        return new Name(this.name);
+      }
+      buildWork() {
+        return new Work(this.work);
+      }
+    }
+
+    const person = new Person("xiaoming", "teacher")
+      .buildPerson()
+      .sayName()
+      .doWork();
+  </script>
+</html>

@@ -14,13 +14,17 @@
       constructor() {
         this.name = "";
       }
-      set(val) {
-        this._name = val;
+
+      setname(val) {
+        this.name = val;
       }
 
-      get name() {
+      getname() {
         return this.name;
       }
     }
+
+    export default new stroe();
+    // 在其他页面可以set 和get name的值
   </script>
 </html>

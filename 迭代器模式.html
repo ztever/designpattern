@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>迭代器模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 类似map foreach之类的方法,提供一个方法，挨个访问数组或者对象里的方法
+
+    function eachObject(list, callBack) {
+      if (list instanceof Array) {
+        for (const j of list) {
+          callBack(j);
+        }
+      } else if (Object.prototype.toString.call(list) === "[object Object]") {
+        Object.keys(list).forEach((element) => {
+          callBack(element);
+        });
+      }
+    }
+
+    eachObject([1, 2, 3], (i) => console.log(i));
+    eachObject({ a: 1, b: 2 }, (i) => console.log(i));
+  </script>
+</html>
