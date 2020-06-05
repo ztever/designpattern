@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>备忘录模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 存储对象，后续用，类似棋牌游戏，可以返回
+    class Store {
+      constructor() {
+        this.data = [];
+      }
+      setData(val) {
+        this.data.push(val);
+      }
+      getData(index) {
+        return this.data[index];
+      }
+      getAllData() {
+        return this.data;
+      }
+    }
+    const store = new Store();
+    class Editor {
+      constructor() {
+        this.content = "";
+      }
+      setContent(value) {
+        this.content = value;
+        store.setData(value);
+      }
+      getContent(id) {
+        this.content = store.getData(id);
+        console.log("id", id, "content", this.content);
+      }
+      getAllContent() {
+        this.content = store.getAllData();
+        console.log("all store", this.content);
+      }
+    }
+    const editor = new Editor();
+    editor.setContent("hello");
+    editor.setContent("world");
+    editor.getContent(0);
+    editor.getContent(1);
+    editor.getAllContent();
+  </script>
+</html>

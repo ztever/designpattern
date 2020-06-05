@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>模版方法模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // like vue slot
+    // 设置主函数，次要函数在继承后，原型上添加方法，但是相同的调用方法
+    class Person {
+      constructor() {
+        this.name = "";
+      }
+      main() {
+        this.setName();
+        this.getName();
+      }
+    }
+
+    class FirstPerson extends Person {
+      constructor() {
+        super();
+      }
+      setName() {
+        console.log("set name");
+      }
+      getName() {
+        console.log("get name");
+      }
+    }
+
+    new FirstPerson().main();
+
+    class NewPerson extends Person {
+      constructor() {
+        super();
+      }
+      setName() {
+        console.log("set new name");
+      }
+      getName() {
+        console.log("get new name");
+      }
+    }
+    new NewPerson().main();
+  </script>
+</html>

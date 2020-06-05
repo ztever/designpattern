@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>职责链模式</title>
+  </head>
+  <body> </body>
+  <script>
+    // 职责链类似koa的use，可以不停的添加use方法，但是只调用一次方法
+    class chainFun {
+      constructor() {
+        this.chain = [];
+      }
+      use(fn) {
+        this.chain.push(fn);
+      }
+      excute(value) {
+        while (this.chain.length) {
+          this.chain.shift()(value);
+        }
+      }
+    }
+    const fn1 = (a) => {
+      a += 10;
+      console.log("this is fn1", a);
+    };
+    const fn2 = (a) => {
+      a += 20;
+      console.log("this is fn2", a);
+    };
+    const chains = new chainFun();
+    chains.use(fn1);
+    chains.use(fn2);
+    chains.excute(10);
+  </script>
+</html>
